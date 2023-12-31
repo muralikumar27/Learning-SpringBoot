@@ -1,0 +1,2 @@
+In spring boot (initial stage of learning) noticed that there is no beans.xml or configuration class, no basepackages = "com.murali" is used in springboot. Just used @component and @Autowired
+SpringBoot automatically search the classpath and brings the bean this is one of an difference between spring core and springBoot.
