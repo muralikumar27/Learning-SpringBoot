@@ -9,5 +9,7 @@ public class Main {
         ApplicationContext context=new AnnotationConfigApplicationContext(Configuration.class);
         Original org = context.getBean(Original.class);
         org.display();
+        Addition addition=context.getBean(Addition.class);
+        addition.add("Add function",4,8);
     }
 }
