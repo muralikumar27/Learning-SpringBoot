@@ -12,7 +12,7 @@ public class RestController {
     @Autowired
     private EmployeeService employeeService;
     @PostMapping("/employee")
-    public Employee saveEmployeeDetails(@RequestBody Employee employee){
-        return employeeService.saveEmployee(employee);
+    public void saveEmployeeDetails(@RequestBody Employee employee){
+         employeeService.saveEmployee(employee);
     }
 }
