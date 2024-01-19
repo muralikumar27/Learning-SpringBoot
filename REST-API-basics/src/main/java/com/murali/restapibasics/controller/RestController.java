@@ -3,9 +3,7 @@ package com.murali.restapibasics.controller;
 import com.murali.restapibasics.entities.Employee;
 import com.murali.restapibasics.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,15 @@ public class RestController {
     @GetMapping("/get-details")
     public List<Employee> getEmployeeDetails(){
         return employeeService.getEmployee();
+    }
+
+    @GetMapping("/get-employee/{id}")
+    public Employee getEmployeeDetailsById(@PathVariable("id") int id){
+        return employeeService.getEmployeeById(id);
+    }
+    @DeleteMapping("delete/{id}")
+    public String deleteEmployeeDetails(@PathVariable("id") int id){
+        employeeService.deleteEmployee(id);
+        return "DELETION SUCCESSFUL...";
     }
 }

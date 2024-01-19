@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SaveEmpDetails implements EmployeeService{
+public class EmployeeServiceClass implements EmployeeService{
 
     @Autowired
     private EmployeeRepo employeeRepo;
@@ -22,4 +22,13 @@ public class SaveEmpDetails implements EmployeeService{
         return employeeRepo.findAll();
     }
 
+    @Override
+    public Employee getEmployeeById(int id) {
+        return employeeRepo.findById(id).get();
+    }
+
+    @Override
+    public void deleteEmployee(int id) {
+        employeeRepo.deleteById(id);
+    }
 }
