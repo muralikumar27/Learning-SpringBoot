@@ -31,4 +31,9 @@ public class RestController {
         employeeService.deleteEmployee(id);
         return "DELETION SUCCESSFUL...";
     }
+    @PutMapping("/update-employee/{id}")
+    public String UpdateEmployeeDetails(@PathVariable("id") int id,@RequestBody Employee employee){
+        employeeService.updateDetails(id,employee);
+        return "Updated details successfully...";
+    }
 }

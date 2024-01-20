@@ -10,4 +10,6 @@ public interface EmployeeService {
 
     public Employee getEmployeeById(int id);
     public void deleteEmployee(int id);
+
+    public void updateDetails(int id,Employee employee);
 }
