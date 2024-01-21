@@ -54,4 +54,9 @@ public class EmployeeServiceClass implements EmployeeService{
 
         employeeRepo.save(empFromDB);
     }
+
+    @Override
+    public Employee findEmployeeByName(String name) {
+        return employeeRepo.findByName(name);
+    }
 }

@@ -12,4 +12,6 @@ public interface EmployeeService {
     public void deleteEmployee(int id);
 
     public void updateDetails(int id,Employee employee);
+
+    public Employee findEmployeeByName(String name);
 }
