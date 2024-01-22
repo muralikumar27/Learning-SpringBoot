@@ -1,6 +1,7 @@
 package com.murali.restapibasics.controller;
 
 import com.murali.restapibasics.entities.Employee;
+import com.murali.restapibasics.errors.EmployeeNotFoundException;
 import com.murali.restapibasics.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class RestController {
     }
 
     @GetMapping("/get-employee/{id}")
-    public Employee getEmployeeDetailsById(@PathVariable("id") int id){
+    public Employee getEmployeeDetailsById(@PathVariable("id") int id) throws EmployeeNotFoundException {
         return employeeService.getEmployeeById(id);
     }
     @DeleteMapping("delete/{id}")

@@ -1,12 +1,14 @@
 package com.murali.restapibasics.service;
 
 import com.murali.restapibasics.entities.Employee;
+import com.murali.restapibasics.errors.EmployeeNotFoundException;
 import com.murali.restapibasics.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceClass implements EmployeeService{
@@ -15,17 +17,25 @@ public class EmployeeServiceClass implements EmployeeService{
     private EmployeeRepo employeeRepo;
     @Override
     public Employee saveEmployee(Employee employee) {
+
         return employeeRepo.save(employee);
     }
 
     @Override
     public List<Employee> getEmployee() {
+
         return employeeRepo.findAll();
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
-        return employeeRepo.findById(id).get();
+    public Employee getEmployeeById(int id) throws EmployeeNotFoundException {
+
+        EmployeeNotFoundException employeeNotFoundException;
+        Optional<Employee>employee=employeeRepo.findById(id);
+        if(!employee.isPresent()){
+            throw new EmployeeNotFoundException("Employee Data not Found for ID "+id);
+        }
+        return employee.get();
     }
 
     @Override
