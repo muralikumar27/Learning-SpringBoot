@@ -2,6 +2,7 @@ package com.murali.restapibasics.service;
 
 import com.murali.restapibasics.entities.Employee;
 import com.murali.restapibasics.errors.EmployeeNotFoundException;
+import com.murali.restapibasics.errors.EmployeeAlreadyExsitException;
 import com.murali.restapibasics.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,12 @@ public class EmployeeServiceClass implements EmployeeService{
     @Autowired
     private EmployeeRepo employeeRepo;
     @Override
-    public Employee saveEmployee(Employee employee) {
-
-        return employeeRepo.save(employee);
+    public void saveEmployee(Employee employee) throws EmployeeAlreadyExsitException {
+         int id = employee.getId();
+         if(employeeRepo.existsById(id)){
+            throw new EmployeeAlreadyExsitException("ID already exists...");
+         }
+         employeeRepo.save(employee);
     }
 
     @Override
@@ -44,10 +48,14 @@ public class EmployeeServiceClass implements EmployeeService{
     }
 
     @Override
-    public void updateDetails(int id,Employee employee){
+    public void updateDetails(int id,Employee employee) throws EmployeeNotFoundException {
         //getting already existing employee data from DB for corresponding ID
-        Employee empFromDB = employeeRepo.findById(id).get();
-
+        Employee empFromDB;
+        Optional<Employee>emp=employeeRepo.findById(id);
+        if(!emp.isPresent()){
+            throw new EmployeeNotFoundException("Employee Data not Found for ID "+id);
+        }
+        empFromDB = emp.get();
         //Checking if any field from request body is empty
         //if any field is empty or null means we do not want update that field
         //if a field is not means we will replace the field in already existing object

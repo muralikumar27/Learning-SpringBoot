@@ -1,6 +1,7 @@
 package com.murali.restapibasics.controller;
 
 import com.murali.restapibasics.entities.Employee;
+import com.murali.restapibasics.errors.EmployeeAlreadyExsitException;
 import com.murali.restapibasics.errors.EmployeeNotFoundException;
 import com.murali.restapibasics.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -15,7 +16,7 @@ public class RestController {
     @Autowired
     private EmployeeService employeeService;
     @PostMapping("/employee")
-    public void saveEmployeeDetails(@Valid @RequestBody Employee employee){
+    public void saveEmployeeDetails(@Valid @RequestBody Employee employee) throws EmployeeAlreadyExsitException {
          employeeService.saveEmployee(employee);
     }
 
@@ -34,7 +35,7 @@ public class RestController {
         return "DELETION SUCCESSFUL...";
     }
     @PutMapping("/update-employee/{id}")
-    public String UpdateEmployeeDetails(@PathVariable("id") int id,@RequestBody Employee employee){
+    public String UpdateEmployeeDetails(@PathVariable("id") int id,@RequestBody Employee employee) throws EmployeeNotFoundException {
         employeeService.updateDetails(id,employee);
         return "Updated details successfully...";
     }

@@ -16,4 +16,10 @@ public class EmployeeExceptionHandler {
         Error error=new Error(e.getMessage(),HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(EmployeeAlreadyExsitException.class)
+    public ResponseEntity <Error> setEmployeeErrorHandler(EmployeeAlreadyExsitException e, WebRequest request){
+        Error error = new Error(e.getMessage(),HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 }
