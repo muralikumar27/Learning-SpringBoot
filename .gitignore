@@ -1,2 +1,3 @@
 REST-API-basics/src/main/resources/application.properties
 .metadata/
+spring-dataJPA/src/main/resources/application.properties
