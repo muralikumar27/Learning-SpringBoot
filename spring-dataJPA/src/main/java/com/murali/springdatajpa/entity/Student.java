@@ -22,7 +22,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
                     generator = "student_id"
     )
-    private String studentId;
+    private int studentId;
     private String studentName;
     @Column(
             name = "email_address",
@@ -30,7 +30,7 @@ public class Student {
             nullable = false
     )
     private String EmailId;
-    private String mobileNo;
+    private Long mobileNo;
 
     @Embedded
     private Parent parent;
