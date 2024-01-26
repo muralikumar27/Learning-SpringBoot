@@ -6,8 +6,11 @@ import com.murali.basicspringsecurity.model.UserModel;
 import com.murali.basicspringsecurity.repository.UserRepository;
 import com.murali.basicspringsecurity.repository.UserVerificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
 
 @Service
 public class UserServiceImplementation implements UserService{
@@ -33,5 +36,22 @@ public class UserServiceImplementation implements UserService{
     public void saveUserToken(User user, String token) {
         UserVerification userVerification = new UserVerification(user,token);
         userVerificationRepository.save(userVerification);
+    }
+
+    @Override
+    public String verifyUser(String token) {
+        UserVerification userVerification = userVerificationRepository.getByToken(token);
+        Calendar calendar = Calendar.getInstance();
+        if(userVerification==null){
+            return "invalid";
+        }
+        if((userVerification.getTime().getTime()-calendar.getTime().getTime()) <= 0){
+            userVerificationRepository.delete(userVerification);
+            return "expired";
+        }
+        User user = userVerification.getUser();
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "valid";
     }
 }

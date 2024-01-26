@@ -8,9 +8,7 @@ import com.murali.basicspringsecurity.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserRegistrationController {
@@ -43,8 +41,22 @@ public class UserRegistrationController {
     }
 
     private String createApplicationUrl(HttpServletRequest request) {
-        return "http://"+request.getServerName()+":"
-                +request.getServerPort()+
-                request.getContextPath();
+        return "http://"
+                +request.getServerName()+":"
+                +request.getServerPort()
+                +request.getContextPath();
+    }
+    @GetMapping("/verifyUser")
+    public String verifyUserToken(@RequestParam("token") String token){
+        String validation = userService.verifyUser(token);
+        if(validation.equals("valid")){
+            return "VALID USER !";
+        }
+        else if (validation.equals("expired")) {
+            return "TOKEN EXPIRED....";
+        }
+        else{
+            return "INVALID USER !";
+        }
     }
 }

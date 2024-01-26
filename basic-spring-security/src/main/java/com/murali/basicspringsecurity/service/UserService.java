@@ -9,4 +9,6 @@ public interface UserService {
     public User registerUser(UserModel userModel);
 
     void saveUserToken(User user, String token);
+
+   String verifyUser(String token);
 }
